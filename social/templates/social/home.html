@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>ConnectHub</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            margin: 0;
+        }
+
+        nav {
+            background: #1877f2;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            background: #0d5ec7;
+            font-weight: bold;
+        }
+
+        .nav-buttons a:hover {
+            background: #084b9c;
+        }
+
+        .container {
+            width: 600px;
+            max-width: 90%;
+            margin: 30px auto;
+        }
+
+        .post {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .date {
+            color: gray;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .content {
+            margin-top: 15px;
+            font-size: 16px;
+        }
+
+        .post-image {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 8px;
+        }
+
+        .like-button {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            background: #1877f2;
+            color: white;
+            padding: 9px 15px;
+            border-radius: 5px;
+        }
+
+        .comment-section {
+            margin-top: 20px;
+        }
+
+        .comment {
+            background: #f2f4f7;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+        }
+
+        .comment-form {
+            margin-top: 15px;
+        }
+
+        .comment-input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .comment-button {
+            padding: 10px 15px;
+            background: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .empty {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+    <a href="{% url 'home' %}" class="logo">
+        🌐 ConnectHub
+    </a>
+
+    <div class="nav-buttons">
+
+        <a href="{% url 'home' %}">
+            🏠 Home
+        </a>
+
+        {% if user.is_authenticated %}
+
+            <a href="{% url 'profile' %}">
+                👤 Profile
+            </a>
+
+            <a href="{% url 'create_post' %}">
+                📝 Create Post
+            </a>
+
+            <a href="{% url 'logout' %}">
+                🚪 Logout
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}">
+                🔐 Login
+            </a>
+
+            <a href="{% url 'register' %}">
+                📝 Register
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+
+    {% if user.is_authenticated %}
+
+        <h2>Welcome, {{ user.username }} 👋</h2>
+
+    {% else %}
+
+        <h2>Welcome to ConnectHub 👋</h2>
+
+    {% endif %}
+
+
+
+    {% for post in posts %}
+
+
+        <div class="post">
+
+
+            <!-- USER -->
+
+            <div class="username">
+
+                👤 {{ post.user.username }}
+
+            </div>
+
+
+            <div class="date">
+
+                {{ post.created_at }}
+
+            </div>
+
+
+            <!-- POST CONTENT -->
+
+            <div class="content">
+
+                {{ post.content }}
+
+            </div>
+
+
+            <!-- POST IMAGE -->
+
+            {% if post.image %}
+
+                <img
+                    src="{{ post.image.url }}"
+                    class="post-image"
+                >
+
+            {% endif %}
+
+
+
+            <!-- LIKE -->
+
+            {% if user.is_authenticated %}
+
+                <a
+                    href="{% url 'like_post' post.id %}"
+                    class="like-button"
+                >
+
+                    ❤️ Like / Unlike
+
+                </a>
+
+            {% endif %}
+
+
+
+            <!-- COMMENTS -->
+
+            <div class="comment-section">
+
+                <h3>💬 Comments</h3>
+
+
+                {% for comment in post.comments.all %}
+
+                    <div class="comment">
+
+                        <strong>
+                            👤 {{ comment.user.username }}
+                        </strong>
+
+                        <p>
+                            {{ comment.content }}
+                        </p>
+
+                        <small>
+                            {{ comment.created_at }}
+                        </small>
+
+                    </div>
+
+
+                {% empty %}
+
+                    <p>
+                        No comments yet.
+                    </p>
+
+                {% endfor %}
+
+
+
+                <!-- ADD COMMENT -->
+
+                {% if user.is_authenticated %}
+
+                    <form
+                        method="POST"
+                        action="{% url 'add_comment' post.id %}"
+                        class="comment-form"
+                    >
+
+                        {% csrf_token %}
+
+                        <input
+                            type="text"
+                            name="content"
+                            class="comment-input"
+                            placeholder="Write a comment..."
+                            required
+                        >
+
+                        <button
+                            type="submit"
+                            class="comment-button"
+                        >
+
+                            💬 Comment
+
+                        </button>
+
+                    </form>
+
+                {% else %}
+
+                    <p>
+                        <a href="{% url 'login' %}">
+                            Login to comment
+                        </a>
+                    </p>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+
+    {% empty %}
+
+
+        <div class="empty">
+
+            <h2>No posts yet</h2>
+
+            <p>
+                Be the first person to create a post!
+            </p>
+
+        </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+
+</body>
+
+</html>
