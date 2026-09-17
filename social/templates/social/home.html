@@ -8,28 +8,44 @@
 
     <style>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f4f7;
-            margin: 0;
-        }
+      body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 
-        nav {
-            background: #1877f2;
-            padding: 15px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
+    /* Attractive ConnectHub background */
+    background:
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.25), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(139, 92, 246, 0.25), transparent 30%),
+        radial-gradient(circle at 80% 85%, rgba(236, 72, 153, 0.18), transparent 30%),
+        linear-gradient(135deg, #dbeafe, #ede9fe, #f5f3ff);
 
-        .logo {
-            color: white;
-            font-size: 25px;
-            font-weight: bold;
-            text-decoration: none;
-        }
+    min-height: 100vh;
+    color: #1f2937;
+}
 
+       nav {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    padding: 16px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    box-shadow: 0 5px 20px rgba(79, 70, 229, 0.25);
+}
+
+       .logo {
+    color: white;
+    font-size: 27px;
+    font-weight: bold;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: scale(1.03);
+}
         .nav-buttons {
             display: flex;
             gap: 10px;
@@ -37,18 +53,22 @@
         }
 
         .nav-buttons a {
-            text-decoration: none;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 6px;
-            background: #0d5ec7;
-            font-weight: bold;
-        }
+    text-decoration: none;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    font-weight: bold;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
 
-        .nav-buttons a:hover {
-            background: #084b9c;
-        }
-
+.nav-buttons a:hover {
+    background: white;
+    color: #4f46e5;
+    transform: translateY(-2px);
+}
         .container {
             width: 600px;
             max-width: 90%;
@@ -56,23 +76,31 @@
         }
 
         .post {
-            background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-        }
+    background: rgba(255, 255, 255, 0.95);
+    padding: 22px;
+    margin-bottom: 22px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(80, 70, 150, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-        .username {
-            font-weight: bold;
-            font-size: 18px;
-        }
+.post:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(80, 70, 150, 0.20);
+}
 
-        .date {
-            color: gray;
-            font-size: 13px;
-            margin-top: 5px;
-        }
+       .username {
+    font-weight: bold;
+    font-size: 18px;
+    color: #3730a3;
+}
+
+.date {
+    color: #6b7280;
+    font-size: 13px;
+    margin-top: 5px;
+}
 
         .content {
             margin-top: 15px;
@@ -86,45 +114,68 @@
         }
 
         .like-button {
-            display: inline-block;
-            margin-top: 15px;
-            text-decoration: none;
-            background: #1877f2;
-            color: white;
-            padding: 9px 15px;
-            border-radius: 5px;
-        }
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+    transition: all 0.2s ease;
+}
+
+.like-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 16px rgba(99, 102, 241, 0.35);
+}
 
         .comment-section {
             margin-top: 20px;
         }
 
         .comment {
-            background: #f2f4f7;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 6px;
-        }
-
+    background: #f8f7ff;
+    padding: 12px 14px;
+    margin: 9px 0;
+    border-radius: 10px;
+    border-left: 3px solid #8b5cf6;
+}
         .comment-form {
             margin-top: 15px;
         }
 
-        .comment-input {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
+       .comment-input {
+    width: 65%;
+    padding: 11px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    font-size: 14px;
+    transition: 0.2s ease;
+    box-sizing: border-box;
+}
 
-        .comment-button {
-            padding: 10px 15px;
-            background: #1877f2;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+.comment-input:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+       .comment-button {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.comment-button:hover {
+    transform: translateY(-2px);
+}
 
         .empty {
             background: white;
@@ -133,18 +184,68 @@
             border-radius: 10px;
         }
         .delete-btn {
-    background: #dc3545;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
     color: white;
     border: none;
-    padding: 9px 15px;
-    border-radius: 6px;
+    padding: 10px 16px;
+    border-radius: 10px;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 12px;
     font-weight: bold;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.20);
+    transition: all 0.2s ease;
 }
 
 .delete-btn:hover {
-    background: #b02a37;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 16px rgba(220, 38, 38, 0.30);
+}
+@media (max-width: 600px) {
+
+    nav {
+        padding: 14px 15px;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .logo {
+        font-size: 24px;
+    }
+
+    .nav-buttons {
+        justify-content: center;
+        gap: 7px;
+    }
+
+    .nav-buttons a {
+        padding: 8px 11px;
+        font-size: 13px;
+    }
+
+    .container {
+        width: 94%;
+        max-width: none;
+        margin: 20px auto;
+    }
+
+    .post {
+        padding: 16px;
+        border-radius: 15px;
+    }
+
+    .post-image {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .comment-input {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .comment-button {
+        width: 100%;
+    }
 }
 
     </style>
