@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from social.views import delete_post
 from social.views import (
     home,
     register,
@@ -25,7 +26,8 @@ from social.views import (
     create_post,
     like_post,
     add_comment,
-    follow_user
+    follow_user,
+    delete_post
 )
 
 urlpatterns = [
@@ -42,5 +44,5 @@ urlpatterns = [
 path('like/<int:post_id>/', like_post, name='like_post'),
 path('comment/<int:post_id>/', add_comment, name='add_comment'),
 path('follow/<int:user_id>/', follow_user, name='follow_user'),
-
+path('delete-post/<int:post_id>/', delete_post, name='delete_post'),
 ]

@@ -5,6 +5,7 @@ from django.contrib import messages
 from .models import Post, Profile
 
 
+
 def home(request):
     posts = Post.objects.all().order_by('-created_at')
     return render(request, 'social/home.html', {'posts': posts})
@@ -159,3 +160,19 @@ def follow_user(request, user_id):
         follow.delete()
 
     return redirect('profile')
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    # Only the person who created the post can delete it
+    if post.user != request.user:
+        return redirect('home')
+
+    if request.method == 'POST':
+        post.delete()
+
+    return redirect('home')
