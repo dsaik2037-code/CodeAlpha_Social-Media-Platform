@@ -29,6 +29,8 @@ from social.views import (
     follow_user,
     delete_post
 )
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,3 +48,4 @@ path('comment/<int:post_id>/', add_comment, name='add_comment'),
 path('follow/<int:user_id>/', follow_user, name='follow_user'),
 path('delete-post/<int:post_id>/', delete_post, name='delete_post'),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
